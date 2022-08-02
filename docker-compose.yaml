@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mongodb:
+    container_name: raffle-db
+    image: mongo:latest
+    volumes:
+      - ./scripts/mongo/init/:/docker-entrypoint-initdb.d
+      - ./scripts/mongo/init:/home/mongodb
+      - ./scripts/mongo/seed/:/home/mongodb/seed
+      - raffle_db_data:/data/db
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+      - MONGO_INITDB_DATABASE=$DB_NAME
+      - APP_USER=$APP_USER
+      - APP_PWD=$APP_PWD
+      - DB_NAME=$DB_NAME
+      - DB_COLLECTION_NAME=$DB_COLLECTION_NAME
+      - MONGO_HOSTNAME=$MONGO_HOSTNAME
+volumes:
+  raffle_db_data:
